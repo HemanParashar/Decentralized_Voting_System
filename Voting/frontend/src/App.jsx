@@ -14,34 +14,46 @@ import VoterSignup from "./Pages/VoterSignup";
 import AdminDashboard from "./Pages/AdminDashboard";
 import VoterDashboard from "./Pages/VoterDashboard";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <Routes>
+
         {/* Public */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginChoice />} />
         <Route path="/signup" element={<SignupChoice />} />
 
-        {/* Admin Login */}
+        {/* Login */}
         <Route path="/login/admin" element={<AdminLogin />} />
-        <Route path="/auth/admin-login" element={<AdminLogin />} />
-
-        {/* Voter Login */}
         <Route path="/login/voter" element={<VoterLogin />} />
-        <Route path="/auth/voter-login" element={<VoterLogin />} />
 
-        {/* Admin Signup */}
+        {/* Signup */}
         <Route path="/signup/admin" element={<AdminSignup />} />
-        <Route path="/auth/admin-signup" element={<AdminSignup />} />
-
-        {/* Voter Signup */}
         <Route path="/signup/voter" element={<VoterSignup />} />
-        <Route path="/auth/voter-signup" element={<VoterSignup />} />
 
-        {/* Dashboards */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/voter/dashboard" element={<VoterDashboard />} />
+        {/* Admin Dashboard */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Voter Dashboard */}
+        <Route
+          path="/voter/dashboard"
+          element={
+            <ProtectedRoute role="voter">
+              <VoterDashboard />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </div>
   );

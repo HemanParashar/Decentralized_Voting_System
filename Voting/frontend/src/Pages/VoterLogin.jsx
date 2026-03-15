@@ -9,23 +9,35 @@ export default function VoterLogin() {
   const [loading, setLoading] = useState(false);
 
   const submit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      const res = await loginUser(form);
-      if (res.data.role === "voter") {
-        navigate("/voter/dashboard");
-      } else {
-        setError("Not authorized as voter");
-      }
-    } catch (err) {
-      setError("Invalid email or password");
-    } finally {
-      setLoading(false);
+  try {
+    const res = await loginUser(form);
+
+    const user = res.data.user;   // ✅ IMPORTANT
+
+    if (user.role === "voter") {
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(user)
+      );
+
+      navigate("/voter/dashboard");
+
+    } else {
+      setError("Not authorized as voter");
     }
-  };
+
+  } catch (err) {
+    console.log(err);   // ⭐ see real error
+    setError("Server error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-emerald-50 px-4">

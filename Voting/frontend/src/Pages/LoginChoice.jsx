@@ -46,7 +46,7 @@ export default function LoginChoice() {
 
             {/* BOTTOM BUTTON */}
             <button
-              onClick={() => navigate("/auth/admin-login")}
+              onClick={() => navigate("/login/admin")}
               className="mt-auto pt-6 text-sky-600 font-semibold hover:underline"
             >
               Login as Admin →
@@ -78,7 +78,7 @@ export default function LoginChoice() {
 
             {/* BOTTOM BUTTON */}
             <button
-              onClick={() => navigate("/auth/voter-login")}
+              onClick={() => navigate("/login/voter")}
               className="mt-auto pt-6 text-emerald-600 font-semibold hover:underline"
             >
               Login as Voter →

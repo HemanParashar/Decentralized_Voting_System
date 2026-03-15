@@ -3,14 +3,32 @@ import { useNavigate } from "react-router-dom";
 
 export default function VoterDashboard() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+
 
   // 🔒 Protect route
-  useEffect(() => {
-    if (!user || user.role !== "voter") {
-      navigate("/login/voter");
-    }
-  }, []);
+const [user, setUser] = React.useState(null);
+
+useEffect(() => {
+
+  const stored = localStorage.getItem("user");
+
+  if (!stored) {
+    navigate("/login/voter");
+    return;
+  }
+
+  const parsedUser = JSON.parse(stored);
+
+  if (parsedUser.role !== "voter") {
+    navigate("/login/voter");
+    return;
+  }
+
+  setUser(prev => prev ?? parsedUser);
+
+}, [navigate]);
+
+if (!user) return null;
 
   const logout = () => {
     localStorage.removeItem("user");
